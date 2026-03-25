@@ -17,7 +17,7 @@ class UserAdmin(BaseUserAdmin):
         ('Important dates', {'fields': ('last_login',)}),
         ('Audit', {'fields': ('created_at', 'updated_at', 'historical')}),
     )
-    readonly_fields = ('created_at', 'updated_at', 'last_login')
+    readonly_fields = ('created_at', 'updated_at', 'historical', 'last_login')
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
@@ -31,4 +31,4 @@ class GuardianAdmin(admin.ModelAdmin):
     list_display = ('parent', 'student', 'relationship_type', 'created_at')
     list_filter = ('relationship_type',)
     search_fields = ('parent__email', 'student__email')
-    readonly_fields = ('created_at', 'updated_at')
+    readonly_fields = ('created_at', 'updated_at', 'historical')

@@ -58,7 +58,7 @@
                            onmouseover="this.style.color='rgb(79,70,229)'" onmouseout="this.style.color='rgb(71,85,105)'">
                             Dashboard
                         </a>
-                        <a href="{% url 'comunicacao:message-inbox' %}" style="color: rgb(71, 85, 105); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color 0.15s; display: inline-flex; align-items: center; gap: 0.25rem;"
+                        <a href="{% url 'comunicacao:inbox' %}" style="color: rgb(71, 85, 105); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color 0.15s; display: inline-flex; align-items: center; gap: 0.25rem;"
                            onmouseover="this.style.color='rgb(79,70,229)'" onmouseout="this.style.color='rgb(71,85,105)'">
                             Mensagens
                             {% if unread_messages_count %}
@@ -103,7 +103,7 @@
                         <a href="{% url 'academico:dashboard' %}" style="color: rgb(71, 85, 105); text-decoration: none; font-size: 0.875rem; font-weight: 500; padding: 0.5rem 0;">
                             Dashboard
                         </a>
-                        <a href="{% url 'comunicacao:message-inbox' %}" style="color: rgb(71, 85, 105); text-decoration: none; font-size: 0.875rem; font-weight: 500; padding: 0.5rem 0; display: inline-flex; align-items: center; gap: 0.25rem;">
+                        <a href="{% url 'comunicacao:inbox' %}" style="color: rgb(71, 85, 105); text-decoration: none; font-size: 0.875rem; font-weight: 500; padding: 0.5rem 0; display: inline-flex; align-items: center; gap: 0.25rem;">
                             Mensagens
                             {% if unread_messages_count %}
                                 <span style="display: inline-block; background: rgb(239,68,68); color: white; font-size: 0.7rem; padding: 0.15rem 0.45rem; border-radius: 9999px; font-weight: 700;">{{ unread_messages_count }}</span>
