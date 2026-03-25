@@ -1,3 +1,8 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
-# Create your views here.
+
+@login_required
+def dashboard(request):
+    # TODO: Sprint 3 - implement role-based dashboard
+    return render(request, 'academico/dashboard.html')

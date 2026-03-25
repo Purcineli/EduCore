@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - EduCore{% endblock %}
+
+{% block content %}
+<div style="max-width: 75rem; margin: 0 auto; padding: 3rem 1rem;">
+    <h1 style="font-size: 1.875rem; font-weight: 700; color: rgb(15, 23, 42); margin-bottom: 0.5rem;">
+        Dashboard
+    </h1>
+    <p style="color: rgb(100, 116, 139); margin-bottom: 2rem;">
+        Welcome back, {{ user.get_full_name|default:user.email }}.
+    </p>
+
+    <div style="background-color: rgb(239, 246, 255); border: 1px solid rgb(191, 219, 254); border-radius: 0.75rem; padding: 2rem; text-align: center;">
+        <p style="color: rgb(29, 78, 216); font-size: 1rem; font-weight: 500;">
+            Dashboard views are being implemented in Sprint 3.
+        </p>
+    </div>
+</div>
+{% endblock %}

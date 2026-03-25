@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+
+{% block title %}EduCore - Modern School Management{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<section style="background: linear-gradient(135deg, #2563eb 0%, #4f46e5 50%, #7c3aed 100%); color: #fff; padding: 8rem 1rem;">
+    <div style="max-width: 56rem; margin: 0 auto; text-align: center;">
+        <h1 style="font-size: clamp(2.25rem, 5vw, 3.5rem); font-weight: 800; margin-bottom: 1.5rem; line-height: 1.1; letter-spacing: -0.025em;">
+            Welcome to EduCore
+        </h1>
+        <p style="font-size: 1.25rem; color: rgba(219, 234, 254, 0.9); margin-bottom: 2.5rem; max-width: 40rem; margin-left: auto; margin-right: auto; line-height: 1.6;">
+            A modern, clean school management system unifying academics, communication, and parent engagement.
+        </p>
+        <a href="{% url 'usuarios:login' %}"
+           style="display: inline-block; padding: 0.875rem 2.5rem; border-radius: 0.5rem; background-color: #fff; color: #2563eb; font-weight: 700; font-size: 1rem; text-decoration: none; box-shadow: 0 10px 25px rgba(0,0,0,0.2); transition: all 0.2s;"
+           onmouseover="this.style.backgroundColor='rgb(239,246,255)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 15px 35px rgba(0,0,0,0.25)'"
+           onmouseout="this.style.backgroundColor='#fff'; this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 25px rgba(0,0,0,0.2)'">
+            Access Portal
+        </a>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section style="background-color: rgb(248, 250, 252); padding: 5rem 1rem;">
+    <div style="max-width: 75rem; margin: 0 auto;">
+        <h2 style="font-size: 2rem; font-weight: 700; color: rgb(15, 23, 42); margin-bottom: 3rem; text-align: center;">
+            Key Features
+        </h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)); gap: 2rem;">
+
+            <!-- Card: Academic Management -->
+            <div style="background-color: #fff; border-radius: 0.75rem; box-shadow: 0 1px 3px rgba(0,0,0,0.07); border: 1px solid rgb(241, 245, 249); padding: 2rem; transition: box-shadow 0.2s;"
+                 onmouseover="this.style.boxShadow='0 8px 25px rgba(0,0,0,0.1)'"
+                 onmouseout="this.style.boxShadow='0 1px 3px rgba(0,0,0,0.07)'">
+                <div style="font-size: 2.5rem; margin-bottom: 1rem;">📚</div>
+                <h3 style="font-size: 1.125rem; font-weight: 700; color: rgb(15, 23, 42); margin-bottom: 0.75rem;">Academic Management</h3>
+                <p style="color: rgb(100, 116, 139); font-size: 0.9375rem; line-height: 1.6;">
+                    Manage courses, subjects, lesson plans, attendance records, and grades all in one place.
+                </p>
+            </div>
+
+            <!-- Card: Guardian Portal -->
+            <div style="background-color: #fff; border-radius: 0.75rem; box-shadow: 0 1px 3px rgba(0,0,0,0.07); border: 1px solid rgb(241, 245, 249); padding: 2rem; transition: box-shadow 0.2s;"
+                 onmouseover="this.style.boxShadow='0 8px 25px rgba(0,0,0,0.1)'"
+                 onmouseout="this.style.boxShadow='0 1px 3px rgba(0,0,0,0.07)'">
+                <div style="font-size: 2.5rem; margin-bottom: 1rem;">👨‍👩‍👧</div>
+                <h3 style="font-size: 1.125rem; font-weight: 700; color: rgb(15, 23, 42); margin-bottom: 0.75rem;">Guardian Portal</h3>
+                <p style="color: rgb(100, 116, 139); font-size: 0.9375rem; line-height: 1.6;">
+                    Parents can track their children's progress, grades, and attendance in real-time.
+                </p>
+            </div>
+
+            <!-- Card: Communication -->
+            <div style="background-color: #fff; border-radius: 0.75rem; box-shadow: 0 1px 3px rgba(0,0,0,0.07); border: 1px solid rgb(241, 245, 249); padding: 2rem; transition: box-shadow 0.2s;"
+                 onmouseover="this.style.boxShadow='0 8px 25px rgba(0,0,0,0.1)'"
+                 onmouseout="this.style.boxShadow='0 1px 3px rgba(0,0,0,0.07)'">
+                <div style="font-size: 2.5rem; margin-bottom: 1rem;">💬</div>
+                <h3 style="font-size: 1.125rem; font-weight: 700; color: rgb(15, 23, 42); margin-bottom: 0.75rem;">Communication</h3>
+                <p style="color: rgb(100, 116, 139); font-size: 0.9375rem; line-height: 1.6;">
+                    Direct messaging and segmented notice boards keep everyone connected and informed.
+                </p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- User Profiles Section -->
+<section style="background-color: #fff; padding: 5rem 1rem;">
+    <div style="max-width: 75rem; margin: 0 auto;">
+        <h2 style="font-size: 2rem; font-weight: 700; color: rgb(15, 23, 42); margin-bottom: 3rem; text-align: center;">
+            User Profiles
+        </h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 1.5rem;">
+
+            <!-- Students -->
+            <div style="border: 2px solid rgb(191, 219, 254); border-radius: 0.75rem; padding: 1.75rem; background-color: rgb(239, 246, 255);">
+                <h3 style="font-weight: 700; font-size: 1.0625rem; color: rgb(29, 78, 216); margin-bottom: 0.75rem;">
+                    👦 Students
+                </h3>
+                <p style="color: rgb(51, 65, 85); font-size: 0.875rem; line-height: 1.6;">
+                    View grades, attendance, schedules, and communicate with teachers.
+                </p>
+            </div>
+
+            <!-- Teachers -->
+            <div style="border: 2px solid rgb(167, 243, 208); border-radius: 0.75rem; padding: 1.75rem; background-color: rgb(240, 253, 244);">
+                <h3 style="font-weight: 700; font-size: 1.0625rem; color: rgb(21, 128, 61); margin-bottom: 0.75rem;">
+                    🏫 Teachers
+                </h3>
+                <p style="color: rgb(51, 65, 85); font-size: 0.875rem; line-height: 1.6;">
+                    Manage lesson plans, record attendance, and input grades.
+                </p>
+            </div>
+
+            <!-- Parents -->
+            <div style="border: 2px solid rgb(221, 214, 254); border-radius: 0.75rem; padding: 1.75rem; background-color: rgb(245, 243, 255);">
+                <h3 style="font-weight: 700; font-size: 1.0625rem; color: rgb(109, 40, 217); margin-bottom: 0.75rem;">
+                    👨‍👩‍👧 Parents
+                </h3>
+                <p style="color: rgb(51, 65, 85); font-size: 0.875rem; line-height: 1.6;">
+                    Monitor your children's academic progress and stay informed.
+                </p>
+            </div>
+
+            <!-- Coordinators -->
+            <div style="border: 2px solid rgb(254, 215, 170); border-radius: 0.75rem; padding: 1.75rem; background-color: rgb(255, 247, 237);">
+                <h3 style="font-weight: 700; font-size: 1.0625rem; color: rgb(194, 65, 12); margin-bottom: 0.75rem;">
+                    ⚙️ Coordinators
+                </h3>
+                <p style="color: rgb(51, 65, 85); font-size: 0.875rem; line-height: 1.6;">
+                    Manage users, courses, schedules, and view institutional reports.
+                </p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- CTA Footer Banner -->
+<section style="background: linear-gradient(to right, #2563eb, #4f46e5); padding: 4rem 1rem; text-align: center;">
+    <h2 style="font-size: 1.75rem; font-weight: 700; color: #fff; margin-bottom: 1rem;">
+        Ready to get started?
+    </h2>
+    <p style="color: rgba(219, 234, 254, 0.9); margin-bottom: 2rem; font-size: 1rem;">
+        Sign in to access your personalized dashboard.
+    </p>
+    <a href="{% url 'usuarios:login' %}"
+       style="display: inline-block; padding: 0.875rem 2.5rem; border-radius: 0.5rem; background-color: #fff; color: #2563eb; font-weight: 700; font-size: 1rem; text-decoration: none; box-shadow: 0 4px 14px rgba(0,0,0,0.2); transition: all 0.2s;"
+       onmouseover="this.style.backgroundColor='rgb(239,246,255)'; this.style.transform='translateY(-2px)'"
+       onmouseout="this.style.backgroundColor='#fff'; this.style.transform='translateY(0)'">
+        Sign In Now
+    </a>
+</section>
+
+{% endblock %}

@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -39,6 +40,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'tailwind',
     'EduCore',
+    'usuarios',
+    'academico',
+    'comunicacao',
+    'institucional',
 ]
 
 TAILWIND_APP_NAME = 'EduCore'
@@ -46,6 +51,7 @@ TAILWIND_APP_NAME = 'EduCore'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -58,7 +64,7 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'EduCore' / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -84,6 +90,10 @@ DATABASES = {
 }
 
 
+# Custom user model
+AUTH_USER_MODEL = 'usuarios.User'
+
+
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
 
@@ -106,13 +116,21 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'pt-br'
 
-TIME_ZONE = 'UTC'
+LANGUAGES = [
+    ('pt-br', _('Portuguese')),
+    ('en', _('English')),
+    ('ru', _('Russian')),
+]
+
+TIME_ZONE = 'America/Sao_Paulo'
 
 USE_I18N = True
 
 USE_TZ = True
+
+LOCALE_PATHS = [BASE_DIR / 'locale']
 
 
 # Static files (CSS, JavaScript, Images)
@@ -121,4 +139,15 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 
-NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"
+# Authentication redirects
+
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/academic/dashboard/'
+
+
+# Default primary key field type
+# https://docs.djangoproject.com/en/6.0/ref/settings/#default-auto-field
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+NPM_BIN_PATH = r'C:\Program Files\nodejs\npm.cmd'
