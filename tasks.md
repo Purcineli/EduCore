@@ -85,62 +85,62 @@ Sprint 2: Frontend Pipeline e Módulo Institucional (App: institucional)
 [x] 2.4.5: Incluir usuarios.urls no core/urls.py.
 
 Sprint 3: Vínculo Pai-Aluno e Gestão Acadêmica (Apps: usuarios, academico)
-[ ] Task 3.1: Model Guardian (vínculo Pai → Aluno)
+[x] Task 3.1: Model Guardian (vínculo Pai → Aluno)
 
-[ ] 3.1.1: Adicionar model Guardian em usuarios/models.py herdando BaseModel:
+[x] 3.1.1: Adicionar model Guardian em usuarios/models.py herdando BaseModel:
          - parent → FK settings.AUTH_USER_MODEL (related_name='guardianships', limit_choices_to={'groups__name': 'Parents'})
          - student → FK settings.AUTH_USER_MODEL (related_name='guardians', limit_choices_to={'groups__name': 'Students'})
          - relationship_type: choices father|mother|guardian|other
          - unique_together: (parent, student)
 
-[ ] 3.1.2: Registrar Guardian no usuarios/admin.py com list_display e search.
+[x] 3.1.2: Registrar Guardian no usuarios/admin.py com list_display e search.
 
-[ ] 3.1.3: Gerar e aplicar migration: python manage.py makemigrations usuarios && migrate.
+[x] 3.1.3: Gerar e aplicar migration: python manage.py makemigrations usuarios && migrate.
 
-[ ] Task 3.2: Model AcademicYear
+[x] Task 3.2: Model AcademicYear
 
-[ ] 3.2.1: Criar model AcademicYear em academico/models.py herdando BaseModel:
+[x] 3.2.1: Criar model AcademicYear em academico/models.py herdando BaseModel:
          - year: IntegerField(unique=True)
          - start_date, end_date: DateField
          - is_active: BooleanField(default=False)
          - Método classmethod get_active() retornando o ano letivo ativo.
 
-[ ] Task 3.3: Models do núcleo acadêmico
+[x] Task 3.3: Models do núcleo acadêmico
 
-[ ] 3.3.1: Criar model Course (Turma) herdando BaseModel:
+[x] 3.3.1: Criar model Course (Turma) herdando BaseModel:
          - name, shift (morning|afternoon|evening)
          - academic_year → FK AcademicYear (related_name='courses')
          - coordinator → FK AUTH_USER_MODEL (limit_choices_to Coordinators, null=True)
 
-[ ] 3.3.2: Criar model Subject (Disciplina) herdando BaseModel:
+[x] 3.3.2: Criar model Subject (Disciplina) herdando BaseModel:
          - name, workload_hours: IntegerField(default=40)
          - course → FK Course (related_name='subjects')
          - teacher → FK AUTH_USER_MODEL (limit_choices_to Teachers, null=True)
 
-[ ] 3.3.3: Criar model Schedule (Horário Semanal) herdando BaseModel:
+[x] 3.3.3: Criar model Schedule (Horário Semanal) herdando BaseModel:
          - subject → FK Subject (related_name='schedules')
          - weekday: choices (mon|tue|wed|thu|fri)
          - start_time, end_time: TimeField
 
-[ ] 3.3.4: Criar model Enrollment (Matrícula) herdando BaseModel:
+[x] 3.3.4: Criar model Enrollment (Matrícula) herdando BaseModel:
          - student → FK AUTH_USER_MODEL (limit_choices_to Students)
          - course → FK Course
          - enrolled_at: DateField(auto_now_add=True)
          - is_active: BooleanField(default=True)
          - unique_together: (student, course)
 
-[ ] 3.3.5: Criar model LessonPlan (Plano de Aula) herdando BaseModel:
+[x] 3.3.5: Criar model LessonPlan (Plano de Aula) herdando BaseModel:
          - title, content: TextField, lesson_date: DateField
          - teacher → FK AUTH_USER_MODEL (limit_choices_to Teachers)
          - subject → FK Subject (related_name='lesson_plans')
 
-[ ] 3.3.6: Criar model Attendance (Presença) herdando BaseModel:
+[x] 3.3.6: Criar model Attendance (Presença) herdando BaseModel:
          - student → FK AUTH_USER_MODEL (limit_choices_to Students)
          - lesson_plan → FK LessonPlan (related_name='attendances')
          - is_present: BooleanField(default=False)
          - unique_together: (student, lesson_plan)
 
-[ ] 3.3.7: Criar model Grade (Nota) herdando BaseModel:
+[x] 3.3.7: Criar model Grade (Nota) herdando BaseModel:
          - student → FK AUTH_USER_MODEL (limit_choices_to Students)
          - subject → FK Subject (related_name='grades')
          - academic_year → FK AcademicYear
@@ -149,42 +149,42 @@ Sprint 3: Vínculo Pai-Aluno e Gestão Acadêmica (Apps: usuarios, academico)
          - grade_type: choices exam|assignment|project|participation
          - unique_together: (student, subject, term, grade_type)
 
-[ ] 3.3.8: Registrar todos os models no academico/admin.py.
+[x] 3.3.8: Registrar todos os models no academico/admin.py.
 
-[ ] 3.3.9: Gerar e aplicar migrations: makemigrations academico && migrate.
+[x] 3.3.9: Gerar e aplicar migrations: makemigrations academico && migrate.
 
-[ ] Task 3.4: Views e Templates do Dashboard Acadêmico
+[x] Task 3.4: Views e Templates do Dashboard Acadêmico
 
-[ ] 3.4.1: Criar DashboardView (LoginRequiredMixin + TemplateView) em academico/views.py.
+[x] 3.4.1: Criar DashboardView (LoginRequiredMixin + TemplateView) em academico/views.py.
          Contexto por grupo:
          - Coordinators: total courses/enrollments/users, recent notices.
          - Teachers: seus subjects, últimos lesson_plans, alunos com falta.
          - Students: suas enrollments, grades por term, próximas aulas (schedule).
          - Parents: filhos vinculados (Guardian), para cada filho: enrollments + grades + attendance %.
 
-[ ] 3.4.2: Criar academico/templates/academico/dashboard.html com Cards em grid-cols-1 md:grid-cols-3.
+[x] 3.4.2: Criar academico/templates/academico/dashboard.html com Cards em grid-cols-1 md:grid-cols-3.
          - Cards de estatísticas no topo (bg-white rounded-lg shadow-sm).
          - Tabelas com listas de alunos/notas/presenças.
          - Seção especial para Parents: seletor de filho com tabs ou accordion.
 
-[ ] Task 3.5: Views de CRUD Acadêmico
+[x] Task 3.5: Views de CRUD Acadêmico
 
-[ ] 3.5.1: CourseListView (LoginRequiredMixin + ListView) com paginação.
+[x] 3.5.1: CourseListView (LoginRequiredMixin + ListView) com paginação.
 
-[ ] 3.5.2: GradeCreateView (LoginRequiredMixin + CreateView) com filtro de students by subject.
+[x] 3.5.2: GradeCreateView (LoginRequiredMixin + CreateView) com filtro de students by subject.
 
-[ ] 3.5.3: AttendanceCreateView ou formset inline para lançamento em lote por LessonPlan.
+[x] 3.5.3: AttendanceCreateView ou formset inline para lançamento em lote por LessonPlan.
 
-[ ] 3.5.4: Criar academico/forms.py com GradeForm, AttendanceForm usando classes Tailwind nos widgets.
+[x] 3.5.4: Criar academico/forms.py com GradeForm, AttendanceForm usando classes Tailwind nos widgets.
 
-[ ] 3.5.5: Criar academico/urls.py (app_name='academico') e incluir no core/urls.py.
+[x] 3.5.5: Criar academico/urls.py (app_name='academico') e incluir no core/urls.py.
 
-[ ] 3.5.6: Criar templates: academico/course_list.html, academico/grade_form.html.
+[x] 3.5.6: Criar templates: academico/course_list.html, academico/grade_form.html, academico/attendance_form.html.
 
 Sprint 4: Comunicação, Signals e Internacionalização (App: comunicacao)
-[ ] Task 4.1: Models de Comunicação
+[x] Task 4.1: Models de Comunicação
 
-[ ] 4.1.1: Criar model NoticeBoard em comunicacao/models.py herdando BaseModel:
+[x] 4.1.1: Criar model NoticeBoard em comunicacao/models.py herdando BaseModel:
          - title, content: TextField
          - author → FK AUTH_USER_MODEL (related_name='notices')
          - target_groups → ManyToManyField('auth.Group', blank=True)
@@ -192,7 +192,7 @@ Sprint 4: Comunicação, Signals e Internacionalização (App: comunicacao)
          - is_published: BooleanField(default=False)
          - published_at: DateTimeField(null=True, blank=True)
 
-[ ] 4.1.2: Criar model Message herdando BaseModel:
+[x] 4.1.2: Criar model Message herdando BaseModel:
          - sender   → FK AUTH_USER_MODEL (related_name='sent_messages')
          - receiver → FK AUTH_USER_MODEL (related_name='received_messages')
          - subject: CharField(max_length=200)
@@ -200,50 +200,50 @@ Sprint 4: Comunicação, Signals e Internacionalização (App: comunicacao)
          - is_read: BooleanField(default=False)
          - read_at: DateTimeField(null=True, blank=True)
 
-[ ] 4.1.3: Registrar no comunicacao/admin.py com filtros por target_groups e is_published.
+[x] 4.1.3: Registrar no comunicacao/admin.py com filtros por target_groups e is_published.
 
-[ ] 4.1.4: Gerar e aplicar migrations: makemigrations comunicacao && migrate.
+[x] 4.1.4: Gerar e aplicar migrations: makemigrations comunicacao && migrate.
 
-[ ] Task 4.2: Signals
+[x] Task 4.2: Signals
 
-[ ] 4.2.1: Criar comunicacao/signals.py com signal post_save no NoticeBoard:
+[x] 4.2.1: Criar comunicacao/signals.py com signal post_save no NoticeBoard:
          - Ao criar NoticeBoard, gravar no campo historical: {'event': 'created', 'author': email, 'timestamp': str(now)}.
          - Ao publicar (is_published muda para True), gravar: {'event': 'published', 'timestamp': str(now)}.
 
-[ ] 4.2.2: Registrar signal no comunicacao/apps.py no método ready().
+[x] 4.2.2: Registrar signal no comunicacao/apps.py no método ready().
 
-[ ] Task 4.3: Views e Templates de Comunicação
+[x] Task 4.3: Views e Templates de Comunicação
 
-[ ] 4.3.1: NoticeBoardListView (LoginRequiredMixin + ListView):
+[x] 4.3.1: NoticeBoardListView (LoginRequiredMixin + ListView):
          - Filtrar: NoticeBoard.objects.filter(is_published=True, target_groups__in=request.user.groups.all()) | filter(target_groups__isnull=True)
          - Ordenar por -published_at.
 
-[ ] 4.3.2: MessageInboxView (LoginRequiredMixin + ListView):
+[x] 4.3.2: MessageInboxView (LoginRequiredMixin + ListView):
          - Listar mensagens recebidas do usuário logado, ordenadas por -created_at.
          - Marcar como lida ao abrir (read_at=now).
 
-[ ] 4.3.3: MessageCreateView (LoginRequiredMixin + CreateView):
+[x] 4.3.3: MessageCreateView (LoginRequiredMixin + CreateView):
          - Sender = request.user (setado no form_valid, não no form).
          - Receiver: select de usuários ativos.
 
-[ ] 4.3.4: Criar template comunicacao/templates/comunicacao/noticeboard_list.html:
+[x] 4.3.4: Criar template comunicacao/templates/comunicacao/noticeboard_list.html:
          - Layout "Feed/Timeline": cada aviso como card com border-l-4 border-blue-500.
          - Badge de grupo alvo (ex: "Parents only", "All").
          - Datas formatadas via |date template filter.
 
-[ ] 4.3.5: Criar comunicacao/urls.py (app_name='comunicacao') e incluir no core/urls.py.
+[x] 4.3.5: Criar comunicacao/urls.py (app_name='comunicacao') e incluir no core/urls.py.
 
-[ ] 4.3.6: Integrar tags {% trans %} e {% blocktrans %} nos templates de comunicação.
+[x] 4.3.6: Integrar tags {% trans %} e {% blocktrans %} nos templates de comunicação.
 
-[ ] Task 4.4: Internacionalização Completa
+[x] Task 4.4: Internacionalização Completa
 
-[ ] 4.4.1: Adicionar {% trans %} e {% blocktrans %} em todos os templates (base.html, landing.html, login.html, dashboard.html, noticeboard_list.html).
+[x] 4.4.1: Adicionar {% trans %} e {% blocktrans %} em todos os templates (base.html, landing.html, login.html, dashboard.html, noticeboard_list.html).
 
-[ ] 4.4.2: Executar: python manage.py makemessages -l pt_BR e preencher locale/pt_BR/LC_MESSAGES/django.po.
+[x] 4.4.2: Executar: python manage.py makemessages -l pt_BR e preencher locale/pt_BR/LC_MESSAGES/django.po.
 
-[ ] 4.4.3: Executar: python manage.py makemessages -l ru e preencher locale/ru/LC_MESSAGES/django.po.
+[x] 4.4.3: Executar: python manage.py makemessages -l ru e preencher locale/ru/LC_MESSAGES/django.po.
 
-[ ] 4.4.4: Compilar: python manage.py compilemessages.
+[x] 4.4.4: Compilar: python manage.py compilemessages.
 
 Sprint 5: Boletim, Horários e Refinamentos UX
 [ ] Task 5.1: Boletim do Aluno (ReportCard View)

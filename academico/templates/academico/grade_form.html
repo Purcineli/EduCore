@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+
+{% block title %}Lançar Nota - EduCore{% endblock %}
+
+{% block content %}
+<div style="background: rgb(248, 250, 252); min-height: 100vh; padding: 3rem 1rem;">
+  <div style="max-width: 640px; margin: 0 auto;">
+
+    <h1 style="font-size: 1.875rem; font-weight: 700; color: rgb(15, 23, 42); margin-bottom: 2rem;">
+      Lançar Nota
+    </h1>
+
+    <!-- Messages -->
+    {% if messages %}
+      {% for message in messages %}
+        <div style="padding: 1rem; border-radius: 0.375rem; margin-bottom: 1rem;
+                    background: rgb(240, 253, 244); border: 1px solid rgb(134, 239, 172); color: rgb(22, 101, 52);">
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+
+    <div style="background: white; border-radius: 0.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+                border: 1px solid rgb(226, 232, 240); padding: 2rem;">
+
+      <form method="post" novalidate>
+        {% csrf_token %}
+
+        <!-- Non-field errors -->
+        {% if form.non_field_errors %}
+          <div style="padding: 1rem; border-radius: 0.375rem; margin-bottom: 1.5rem;
+                      background: rgb(254, 242, 242); border: 1px solid rgb(252, 165, 165); color: rgb(185, 28, 28);">
+            {% for error in form.non_field_errors %}
+              <p>{{ error }}</p>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        <!-- Student -->
+        <div style="margin-bottom: 1.5rem;">
+          <label for="{{ form.student.id_for_label }}"
+                 style="display: block; font-weight: 500; color: rgb(15, 23, 42); margin-bottom: 0.375rem; font-size: 0.875rem;">
+            Aluno
+          </label>
+          {{ form.student }}
+          {% if form.student.errors %}
+            <p style="color: rgb(239, 68, 68); font-size: 0.875rem; margin-top: 0.25rem;">{{ form.student.errors.0 }}</p>
+          {% endif %}
+        </div>
+
+        <!-- Subject -->
+        <div style="margin-bottom: 1.5rem;">
+          <label for="{{ form.subject.id_for_label }}"
+                 style="display: block; font-weight: 500; color: rgb(15, 23, 42); margin-bottom: 0.375rem; font-size: 0.875rem;">
+            Disciplina
+          </label>
+          {{ form.subject }}
+          {% if form.subject.errors %}
+            <p style="color: rgb(239, 68, 68); font-size: 0.875rem; margin-top: 0.25rem;">{{ form.subject.errors.0 }}</p>
+          {% endif %}
+        </div>
+
+        <!-- Value -->
+        <div style="margin-bottom: 1.5rem;">
+          <label for="{{ form.value.id_for_label }}"
+                 style="display: block; font-weight: 500; color: rgb(15, 23, 42); margin-bottom: 0.375rem; font-size: 0.875rem;">
+            Nota (0 – 10)
+          </label>
+          {{ form.value }}
+          {% if form.value.errors %}
+            <p style="color: rgb(239, 68, 68); font-size: 0.875rem; margin-top: 0.25rem;">{{ form.value.errors.0 }}</p>
+          {% endif %}
+        </div>
+
+        <!-- Term -->
+        <div style="margin-bottom: 1.5rem;">
+          <label for="{{ form.term.id_for_label }}"
+                 style="display: block; font-weight: 500; color: rgb(15, 23, 42); margin-bottom: 0.375rem; font-size: 0.875rem;">
+            Bimestre
+          </label>
+          {{ form.term }}
+          {% if form.term.errors %}
+            <p style="color: rgb(239, 68, 68); font-size: 0.875rem; margin-top: 0.25rem;">{{ form.term.errors.0 }}</p>
+          {% endif %}
+        </div>
+
+        <!-- Grade Type -->
+        <div style="margin-bottom: 1.5rem;">
+          <label for="{{ form.grade_type.id_for_label }}"
+                 style="display: block; font-weight: 500; color: rgb(15, 23, 42); margin-bottom: 0.375rem; font-size: 0.875rem;">
+            Tipo de avaliação
+          </label>
+          {{ form.grade_type }}
+          {% if form.grade_type.errors %}
+            <p style="color: rgb(239, 68, 68); font-size: 0.875rem; margin-top: 0.25rem;">{{ form.grade_type.errors.0 }}</p>
+          {% endif %}
+        </div>
+
+        <!-- Academic Year -->
+        <div style="margin-bottom: 2rem;">
+          <label for="{{ form.academic_year.id_for_label }}"
+                 style="display: block; font-weight: 500; color: rgb(15, 23, 42); margin-bottom: 0.375rem; font-size: 0.875rem;">
+            Ano letivo
+          </label>
+          {{ form.academic_year }}
+          {% if form.academic_year.errors %}
+            <p style="color: rgb(239, 68, 68); font-size: 0.875rem; margin-top: 0.25rem;">{{ form.academic_year.errors.0 }}</p>
+          {% endif %}
+        </div>
+
+        <!-- Actions -->
+        <div style="display: flex; gap: 1rem;">
+          <button type="submit"
+                  style="flex: 1; padding: 0.75rem 1rem; background: linear-gradient(to right, rgb(37, 99, 235), rgb(99, 102, 241));
+                         color: white; border: none; border-radius: 0.375rem; font-weight: 500; cursor: pointer;">
+            Salvar nota
+          </button>
+          <a href="{% url 'academico:dashboard' %}"
+             style="padding: 0.75rem 1rem; border: 1px solid rgb(203, 213, 225); border-radius: 0.375rem;
+                    color: rgb(100, 116, 139); text-decoration: none; text-align: center; background: white;">
+            Cancelar
+          </a>
+        </div>
+
+      </form>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

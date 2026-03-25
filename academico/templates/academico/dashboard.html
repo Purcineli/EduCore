@@ -3,18 +3,243 @@
 {% block title %}Dashboard - EduCore{% endblock %}
 
 {% block content %}
-<div style="max-width: 75rem; margin: 0 auto; padding: 3rem 1rem;">
-    <h1 style="font-size: 1.875rem; font-weight: 700; color: rgb(15, 23, 42); margin-bottom: 0.5rem;">
-        Dashboard
-    </h1>
-    <p style="color: rgb(100, 116, 139); margin-bottom: 2rem;">
-        Welcome back, {{ user.get_full_name|default:user.email }}.
-    </p>
+<div style="background-color: rgb(248, 250, 252); min-height: 100vh; padding: 3rem 1rem;">
+  <div style="max-width: 80rem; margin: 0 auto;">
 
-    <div style="background-color: rgb(239, 246, 255); border: 1px solid rgb(191, 219, 254); border-radius: 0.75rem; padding: 2rem; text-align: center;">
-        <p style="color: rgb(29, 78, 216); font-size: 1rem; font-weight: 500;">
-            Dashboard views are being implemented in Sprint 3.
-        </p>
-    </div>
+    <h1 style="font-size: 1.875rem; font-weight: 700; color: rgb(15, 23, 42); margin-bottom: 0.5rem;">Dashboard</h1>
+    <p style="color: rgb(100, 116, 139); margin-bottom: 2rem;">Welcome, {{ user.get_full_name|default:user.email }}</p>
+
+    <!-- Active Academic Year banner -->
+    {% if active_year %}
+      <div style="margin-bottom: 2rem; padding: 1rem 1.25rem; border-radius: 0.5rem; background-color: rgb(239, 246, 255); border: 1px solid rgb(191, 219, 254); color: rgb(29, 78, 216); font-size: 0.875rem;">
+        <strong>Academic Year:</strong> {{ active_year.year }}
+        &nbsp;&mdash;&nbsp;{{ active_year.start_date|date:'M d, Y' }} to {{ active_year.end_date|date:'M d, Y' }}
+      </div>
+    {% else %}
+      <div style="margin-bottom: 2rem; padding: 1rem 1.25rem; border-radius: 0.5rem; background-color: rgb(254, 252, 232); border: 1px solid rgb(253, 224, 71); color: rgb(133, 77, 14); font-size: 0.875rem;">
+        <strong>Warning:</strong> No active academic year. Please set one in the admin panel.
+      </div>
+    {% endif %}
+
+    <!-- ===== COORDINATOR SECTION ===== -->
+    {% if is_coordinator %}
+
+      <!-- Stat cards -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 3rem;">
+        <div style="background: white; border-radius: 0.5rem; border: 1px solid rgb(226, 232, 240); box-shadow: 0 1px 2px rgba(0,0,0,0.05); padding: 1.5rem;">
+          <p style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; color: rgb(100, 116, 139); margin-bottom: 0.5rem;">Total Courses</p>
+          <p style="font-size: 2.25rem; font-weight: 700; color: rgb(15, 23, 42);">{{ total_courses }}</p>
+        </div>
+        <div style="background: white; border-radius: 0.5rem; border: 1px solid rgb(226, 232, 240); box-shadow: 0 1px 2px rgba(0,0,0,0.05); padding: 1.5rem;">
+          <p style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; color: rgb(100, 116, 139); margin-bottom: 0.5rem;">Total Students</p>
+          <p style="font-size: 2.25rem; font-weight: 700; color: rgb(15, 23, 42);">{{ total_students }}</p>
+        </div>
+        <div style="background: white; border-radius: 0.5rem; border: 1px solid rgb(226, 232, 240); box-shadow: 0 1px 2px rgba(0,0,0,0.05); padding: 1.5rem;">
+          <p style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; color: rgb(100, 116, 139); margin-bottom: 0.5rem;">Total Enrollments</p>
+          <p style="font-size: 2.25rem; font-weight: 700; color: rgb(15, 23, 42);">{{ total_enrollments }}</p>
+        </div>
+      </div>
+
+      <!-- Courses table -->
+      <h2 style="font-size: 1.25rem; font-weight: 700; color: rgb(15, 23, 42); margin-bottom: 1rem;">Courses</h2>
+      <div style="background: white; border-radius: 0.5rem; border: 1px solid rgb(226, 232, 240); box-shadow: 0 1px 3px rgba(0,0,0,0.08); overflow: hidden;">
+        <table style="width: 100%; border-collapse: collapse;">
+          <thead style="background: rgb(248, 250, 252); border-bottom: 1px solid rgb(226, 232, 240);">
+            <tr>
+              <th style="padding: 0.875rem 1rem; text-align: left; font-size: 0.8125rem; font-weight: 600; color: rgb(15, 23, 42);">Course Name</th>
+              <th style="padding: 0.875rem 1rem; text-align: left; font-size: 0.8125rem; font-weight: 600; color: rgb(15, 23, 42);">Shift</th>
+              <th style="padding: 0.875rem 1rem; text-align: left; font-size: 0.8125rem; font-weight: 600; color: rgb(15, 23, 42);">Coordinator</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for course in courses %}
+              <tr style="border-bottom: 1px solid rgb(241, 245, 249);">
+                <td style="padding: 0.875rem 1rem; color: rgb(15, 23, 42); font-weight: 500;">{{ course.name }}</td>
+                <td style="padding: 0.875rem 1rem; color: rgb(100, 116, 139);">{{ course.get_shift_display }}</td>
+                <td style="padding: 0.875rem 1rem; color: rgb(100, 116, 139);">{{ course.coordinator.get_full_name|default:'-' }}</td>
+              </tr>
+            {% empty %}
+              <tr>
+                <td colspan="3" style="padding: 2rem; text-align: center; color: rgb(100, 116, 139);">No courses found for this academic year.</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+    {% endif %}
+
+    <!-- ===== TEACHER SECTION ===== -->
+    {% if is_teacher %}
+
+      <h2 style="font-size: 1.25rem; font-weight: 700; color: rgb(15, 23, 42); margin-bottom: 1rem;">Your Subjects</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem; margin-bottom: 2.5rem;">
+        {% for subject in subjects %}
+          <div style="background: white; border-radius: 0.5rem; border: 1px solid rgb(226, 232, 240); box-shadow: 0 1px 2px rgba(0,0,0,0.05); padding: 1.25rem;">
+            <h3 style="font-weight: 600; color: rgb(15, 23, 42); margin-bottom: 0.375rem;">{{ subject.name }}</h3>
+            <p style="color: rgb(100, 116, 139); font-size: 0.875rem; margin-bottom: 0.25rem;">Course: {{ subject.course.name }}</p>
+            <p style="color: rgb(100, 116, 139); font-size: 0.875rem;">Workload: {{ subject.workload_hours }}h</p>
+          </div>
+        {% empty %}
+          <p style="color: rgb(100, 116, 139);">No subjects assigned to you yet.</p>
+        {% endfor %}
+      </div>
+
+      {% if absent_today %}
+        <h2 style="font-size: 1.25rem; font-weight: 700; color: rgb(15, 23, 42); margin-bottom: 1rem;">Absent Today</h2>
+        <div style="background: white; border-radius: 0.5rem; border: 1px solid rgb(226, 232, 240); border-left: 4px solid rgb(239, 68, 68); box-shadow: 0 1px 2px rgba(0,0,0,0.05); padding: 1.25rem;">
+          <ul style="list-style: none; margin: 0; padding: 0;">
+            {% for attendance in absent_today %}
+              <li style="padding: 0.5rem 0; border-bottom: 1px solid rgb(241, 245, 249); color: rgb(15, 23, 42);">
+                {{ attendance.student.get_full_name|default:attendance.student.email }}
+                <span style="color: rgb(100, 116, 139); font-size: 0.875rem;">&mdash; {{ attendance.lesson_plan.title }}</span>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% else %}
+        <div style="background: rgb(240, 253, 244); border: 1px solid rgb(187, 247, 208); border-radius: 0.5rem; padding: 1rem; color: rgb(21, 128, 61); font-size: 0.875rem;">
+          No absences recorded for today.
+        </div>
+      {% endif %}
+
+    {% endif %}
+
+    <!-- ===== STUDENT SECTION ===== -->
+    {% if is_student %}
+
+      <!-- Stat cards -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem;">
+        <div style="background: white; border-radius: 0.5rem; border: 1px solid rgb(226, 232, 240); box-shadow: 0 1px 2px rgba(0,0,0,0.05); padding: 1.5rem;">
+          <p style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; color: rgb(100, 116, 139); margin-bottom: 0.5rem;">Enrolled Courses</p>
+          <p style="font-size: 2.25rem; font-weight: 700; color: rgb(15, 23, 42);">{{ enrollments.count }}</p>
+        </div>
+        <div style="background: white; border-radius: 0.5rem; border: 1px solid rgb(226, 232, 240); box-shadow: 0 1px 2px rgba(0,0,0,0.05); padding: 1.5rem;">
+          <p style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; color: rgb(100, 116, 139); margin-bottom: 0.5rem;">Attendance</p>
+          {% if attendance_percentage >= 80 %}
+            <p style="font-size: 2.25rem; font-weight: 700; color: rgb(34, 197, 94);">{{ attendance_percentage }}%</p>
+          {% elif attendance_percentage >= 70 %}
+            <p style="font-size: 2.25rem; font-weight: 700; color: rgb(202, 138, 4);">{{ attendance_percentage }}%</p>
+          {% else %}
+            <p style="font-size: 2.25rem; font-weight: 700; color: rgb(239, 68, 68);">{{ attendance_percentage }}%</p>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Grades table -->
+      <h2 style="font-size: 1.25rem; font-weight: 700; color: rgb(15, 23, 42); margin-bottom: 1rem;">Your Grades</h2>
+      <div style="background: white; border-radius: 0.5rem; border: 1px solid rgb(226, 232, 240); box-shadow: 0 1px 3px rgba(0,0,0,0.08); overflow: hidden;">
+        <table style="width: 100%; border-collapse: collapse;">
+          <thead style="background: rgb(248, 250, 252); border-bottom: 1px solid rgb(226, 232, 240);">
+            <tr>
+              <th style="padding: 0.875rem 1rem; text-align: left; font-size: 0.8125rem; font-weight: 600; color: rgb(15, 23, 42);">Subject</th>
+              <th style="padding: 0.875rem 1rem; text-align: left; font-size: 0.8125rem; font-weight: 600; color: rgb(15, 23, 42);">Term</th>
+              <th style="padding: 0.875rem 1rem; text-align: left; font-size: 0.8125rem; font-weight: 600; color: rgb(15, 23, 42);">Type</th>
+              <th style="padding: 0.875rem 1rem; text-align: center; font-size: 0.8125rem; font-weight: 600; color: rgb(15, 23, 42);">Grade</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for grade in grades %}
+              <tr style="border-bottom: 1px solid rgb(241, 245, 249);">
+                <td style="padding: 0.875rem 1rem; color: rgb(15, 23, 42);">{{ grade.subject.name }}</td>
+                <td style="padding: 0.875rem 1rem; color: rgb(100, 116, 139);">{{ grade.get_term_display }}</td>
+                <td style="padding: 0.875rem 1rem; color: rgb(100, 116, 139);">{{ grade.get_grade_type_display }}</td>
+                <td style="padding: 0.875rem 1rem; text-align: center; font-weight: 600;
+                  {% if grade.value >= 7 %}color: rgb(34, 197, 94);
+                  {% elif grade.value >= 5 %}color: rgb(202, 138, 4);
+                  {% else %}color: rgb(239, 68, 68);{% endif %}">
+                  {{ grade.value }}
+                </td>
+              </tr>
+            {% empty %}
+              <tr>
+                <td colspan="4" style="padding: 2rem; text-align: center; color: rgb(100, 116, 139);">No grades recorded yet.</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+    {% endif %}
+
+    <!-- ===== PARENT SECTION ===== -->
+    {% if is_parent %}
+
+      <h2 style="font-size: 1.25rem; font-weight: 700; color: rgb(15, 23, 42); margin-bottom: 1.5rem;">Your Children</h2>
+
+      {% if children_data %}
+        {% for child in children_data %}
+          <div style="background: white; border-radius: 0.5rem; border: 1px solid rgb(226, 232, 240); box-shadow: 0 1px 3px rgba(0,0,0,0.08); padding: 1.5rem; margin-bottom: 1.5rem;">
+
+            <h3 style="font-size: 1.125rem; font-weight: 700; color: rgb(15, 23, 42); margin-bottom: 0.25rem;">
+              {{ child.student.get_full_name|default:child.student.email }}
+            </h3>
+            <p style="font-size: 0.875rem; color: rgb(100, 116, 139); margin-bottom: 1.25rem;">
+              Relationship: {{ child.relationship }}
+            </p>
+
+            <!-- Mini stat cards -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+              <div style="background: rgb(248, 250, 252); border-radius: 0.375rem; padding: 1rem;">
+                <p style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase; color: rgb(100, 116, 139); margin-bottom: 0.375rem;">Attendance</p>
+                {% if child.attendance_percentage >= 80 %}
+                  <p style="font-size: 1.875rem; font-weight: 700; color: rgb(34, 197, 94);">{{ child.attendance_percentage }}%</p>
+                {% elif child.attendance_percentage >= 70 %}
+                  <p style="font-size: 1.875rem; font-weight: 700; color: rgb(202, 138, 4);">{{ child.attendance_percentage }}%</p>
+                {% else %}
+                  <p style="font-size: 1.875rem; font-weight: 700; color: rgb(239, 68, 68);">{{ child.attendance_percentage }}%</p>
+                {% endif %}
+              </div>
+              <div style="background: rgb(248, 250, 252); border-radius: 0.375rem; padding: 1rem;">
+                <p style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase; color: rgb(100, 116, 139); margin-bottom: 0.375rem;">Subjects w/ Grades</p>
+                <p style="font-size: 1.875rem; font-weight: 700; color: rgb(99, 102, 241);">{{ child.grades|length }}</p>
+              </div>
+            </div>
+
+            <!-- Per-subject average grades -->
+            <h4 style="font-size: 0.9375rem; font-weight: 600; color: rgb(15, 23, 42); margin-bottom: 0.75rem;">Average Grades by Subject</h4>
+            <table style="width: 100%; border-collapse: collapse; border: 1px solid rgb(226, 232, 240); border-radius: 0.375rem; overflow: hidden;">
+              <thead style="background: rgb(248, 250, 252); border-bottom: 1px solid rgb(226, 232, 240);">
+                <tr>
+                  <th style="padding: 0.75rem 1rem; text-align: left; font-size: 0.8125rem; font-weight: 600; color: rgb(15, 23, 42);">Subject</th>
+                  <th style="padding: 0.75rem 1rem; text-align: center; font-size: 0.8125rem; font-weight: 600; color: rgb(15, 23, 42);">Average</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for entry in child.grades %}
+                  <tr style="border-bottom: 1px solid rgb(241, 245, 249);">
+                    <td style="padding: 0.75rem 1rem; color: rgb(15, 23, 42);">{{ entry.subject__name }}</td>
+                    <td style="padding: 0.75rem 1rem; text-align: center; font-weight: 600;
+                      {% if entry.avg_grade >= 7 %}color: rgb(34, 197, 94);
+                      {% elif entry.avg_grade >= 5 %}color: rgb(202, 138, 4);
+                      {% else %}color: rgb(239, 68, 68);{% endif %}">
+                      {{ entry.avg_grade|floatformat:2 }}
+                    </td>
+                  </tr>
+                {% empty %}
+                  <tr>
+                    <td colspan="2" style="padding: 1.5rem; text-align: center; color: rgb(100, 116, 139);">No grades recorded yet.</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+
+          </div>
+        {% endfor %}
+      {% else %}
+        <p style="color: rgb(100, 116, 139);">No children linked to your account. Please contact the school administrator.</p>
+      {% endif %}
+
+    {% endif %}
+
+    <!-- Fallback: no group assigned -->
+    {% if not is_coordinator and not is_teacher and not is_student and not is_parent %}
+      <div style="background: rgb(254, 252, 232); border: 1px solid rgb(253, 224, 71); border-radius: 0.5rem; padding: 1.5rem; color: rgb(133, 77, 14);">
+        <strong>Your account has no role assigned.</strong>
+        Please contact an administrator to be added to a group (Coordinators, Teachers, Students, or Parents).
+      </div>
+    {% endif %}
+
+  </div>
 </div>
 {% endblock %}

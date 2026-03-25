@@ -1,0 +1,83 @@
+# Brazilian Portuguese translations for EduCore.
+# Copyright (C) 2026 EduCore
+msgid ""
+msgstr ""
+"Project-Id-Version: EduCore 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-25 00:00+0000\n"
+"PO-Revision-Date: 2026-03-25 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Brazilian Portuguese\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+# --- Notice Board ---
+msgid "Notice Board"
+msgstr "Mural de Avisos"
+
+msgid "No notices at this time."
+msgstr "Nenhum aviso no momento."
+
+msgid "All Users"
+msgstr "Todos os Usuários"
+
+msgid "by"
+msgstr "por"
+
+# --- Pagination ---
+msgid "First"
+msgstr "Primeira"
+
+msgid "Prev"
+msgstr "Anterior"
+
+msgid "Next"
+msgstr "Próxima"
+
+msgid "Last"
+msgstr "Última"
+
+# --- Inbox ---
+msgid "Messages"
+msgstr "Mensagens"
+
+msgid "Send Message"
+msgstr "Enviar Mensagem"
+
+msgid "New"
+msgstr "Nova"
+
+msgid "No messages yet."
+msgstr "Nenhuma mensagem ainda."
+
+msgid "Send your first message"
+msgstr "Enviar sua primeira mensagem"
+
+# --- Message Detail ---
+msgid "From"
+msgstr "De"
+
+msgid "Reply"
+msgstr "Responder"
+
+msgid "Back to Inbox"
+msgstr "Voltar à Caixa de Entrada"
+
+# --- Message Form ---
+msgid "To"
+msgstr "Para"
+
+msgid "Subject"
+msgstr "Assunto"
+
+msgid "Message"
+msgstr "Mensagem"
+
+msgid "Send"
+msgstr "Enviar"
+
+msgid "Cancel"
+msgstr "Cancelar"

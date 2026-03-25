@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans 'Send Message' %} - EduCore{% endblock %}
+
+{% block content %}
+<div class="bg-slate-50 min-h-screen py-12 px-4">
+  <div class="max-w-2xl mx-auto">
+
+    <h1 class="text-3xl font-bold text-slate-800 mb-8">{% trans 'Send Message' %}</h1>
+
+    <div style="background: white; border-radius: 0.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border: 1px solid rgb(226,232,240); padding: 2rem;">
+
+      <form method="post" novalidate>
+        {% csrf_token %}
+
+        <!-- Receiver -->
+        <div style="margin-bottom: 1.5rem;">
+          <label for="{{ form.receiver.id_for_label }}"
+                 style="display: block; color: rgb(15,23,42); font-weight: 500; margin-bottom: 0.5rem; font-size: 0.875rem;">
+            {% trans 'To' %}
+          </label>
+          {{ form.receiver }}
+          {% if form.receiver.errors %}
+            <p style="color: rgb(239,68,68); font-size: 0.875rem; margin-top: 0.25rem;">{{ form.receiver.errors.0 }}</p>
+          {% endif %}
+        </div>
+
+        <!-- Subject -->
+        <div style="margin-bottom: 1.5rem;">
+          <label for="{{ form.subject.id_for_label }}"
+                 style="display: block; color: rgb(15,23,42); font-weight: 500; margin-bottom: 0.5rem; font-size: 0.875rem;">
+            {% trans 'Subject' %}
+          </label>
+          {{ form.subject }}
+          {% if form.subject.errors %}
+            <p style="color: rgb(239,68,68); font-size: 0.875rem; margin-top: 0.25rem;">{{ form.subject.errors.0 }}</p>
+          {% endif %}
+        </div>
+
+        <!-- Body -->
+        <div style="margin-bottom: 2rem;">
+          <label for="{{ form.body.id_for_label }}"
+                 style="display: block; color: rgb(15,23,42); font-weight: 500; margin-bottom: 0.5rem; font-size: 0.875rem;">
+            {% trans 'Message' %}
+          </label>
+          {{ form.body }}
+          {% if form.body.errors %}
+            <p style="color: rgb(239,68,68); font-size: 0.875rem; margin-top: 0.25rem;">{{ form.body.errors.0 }}</p>
+          {% endif %}
+        </div>
+
+        <!-- Submit -->
+        <div style="display: flex; gap: 1rem;">
+          <button type="submit"
+                  style="flex: 1; padding: 0.75rem 1rem; background: linear-gradient(to right, rgb(37,99,235), rgb(99,102,241)); color: white; border: none; border-radius: 0.375rem; font-weight: 500; cursor: pointer;">
+            {% trans 'Send' %}
+          </button>
+          <a href="{% url 'comunicacao:inbox' %}"
+             style="padding: 0.75rem 1rem; border: 1px solid rgb(203,213,225); border-radius: 0.375rem; color: rgb(100,116,139); text-decoration: none; text-align: center; background: white;">
+            {% trans 'Cancel' %}
+          </a>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

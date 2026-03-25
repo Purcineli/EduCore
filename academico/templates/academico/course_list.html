@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block title %}Turmas - EduCore{% endblock %}
+
+{% block content %}
+<div style="background: rgb(248, 250, 252); min-height: 100vh; padding: 3rem 1rem;">
+  <div style="max-width: 1120px; margin: 0 auto;">
+
+    <!-- Header -->
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem;">
+      <h1 style="font-size: 1.875rem; font-weight: 700; color: rgb(15, 23, 42);">Turmas</h1>
+      <a href="{% url 'academico:dashboard' %}"
+         style="padding: 0.5rem 1rem; border: 1px solid rgb(203, 213, 225); border-radius: 0.375rem; background: white; color: rgb(100, 116, 139); text-decoration: none; font-size: 0.875rem;">
+        Voltar ao Dashboard
+      </a>
+    </div>
+
+    <!-- Messages -->
+    {% if messages %}
+      {% for message in messages %}
+        <div style="padding: 1rem; border-radius: 0.375rem; margin-bottom: 1rem;
+                    background: rgb(240, 253, 244); border: 1px solid rgb(134, 239, 172); color: rgb(22, 101, 52);">
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+
+    <!-- Table -->
+    <div style="background: white; border-radius: 0.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); overflow: hidden;">
+      <table style="width: 100%; border-collapse: collapse;">
+        <thead style="background: rgb(248, 250, 252); border-bottom: 1px solid rgb(226, 232, 240);">
+          <tr>
+            <th style="padding: 1rem; text-align: left; font-weight: 600; color: rgb(15, 23, 42); font-size: 0.875rem;">Turma</th>
+            <th style="padding: 1rem; text-align: left; font-weight: 600; color: rgb(15, 23, 42); font-size: 0.875rem;">Turno</th>
+            <th style="padding: 1rem; text-align: left; font-weight: 600; color: rgb(15, 23, 42); font-size: 0.875rem;">Coordenador</th>
+            <th style="padding: 1rem; text-align: center; font-weight: 600; color: rgb(15, 23, 42); font-size: 0.875rem;">Disciplinas</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for course in courses %}
+            <tr style="border-bottom: 1px solid rgb(226, 232, 240);">
+              <td style="padding: 1rem; color: rgb(15, 23, 42); font-weight: 500;">{{ course.name }}</td>
+              <td style="padding: 1rem; color: rgb(100, 116, 139);">{{ course.get_shift_display }}</td>
+              <td style="padding: 1rem; color: rgb(100, 116, 139);">
+                {{ course.coordinator.get_full_name|default:'-' }}
+              </td>
+              <td style="padding: 1rem; text-align: center; color: rgb(100, 116, 139);">
+                {{ course.subjects.count }}
+              </td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="4" style="padding: 2rem; text-align: center; color: rgb(100, 116, 139);">
+                Nenhuma turma encontrada para o ano letivo ativo.
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    {% if is_paginated %}
+      <div style="margin-top: 2rem; display: flex; justify-content: center; align-items: center; gap: 0.75rem;">
+        {% if page_obj.has_previous %}
+          <a href="?page=1"
+             style="padding: 0.5rem 1rem; border-radius: 0.375rem; border: 1px solid rgb(203, 213, 225); background: white; color: rgb(15, 23, 42); text-decoration: none; font-size: 0.875rem;">
+            Primeira
+          </a>
+          <a href="?page={{ page_obj.previous_page_number }}"
+             style="padding: 0.5rem 1rem; border-radius: 0.375rem; border: 1px solid rgb(203, 213, 225); background: white; color: rgb(15, 23, 42); text-decoration: none; font-size: 0.875rem;">
+            Anterior
+          </a>
+        {% endif %}
+
+        <span style="padding: 0.5rem 1rem; color: rgb(100, 116, 139); font-size: 0.875rem;">
+          Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+          <a href="?page={{ page_obj.next_page_number }}"
+             style="padding: 0.5rem 1rem; border-radius: 0.375rem; border: 1px solid rgb(203, 213, 225); background: white; color: rgb(15, 23, 42); text-decoration: none; font-size: 0.875rem;">
+            Próxima
+          </a>
+          <a href="?page={{ page_obj.paginator.num_pages }}"
+             style="padding: 0.5rem 1rem; border-radius: 0.375rem; border: 1px solid rgb(203, 213, 225); background: white; color: rgb(15, 23, 42); text-decoration: none; font-size: 0.875rem;">
+            Última
+          </a>
+        {% endif %}
+      </div>
+    {% endif %}
+
+  </div>
+</div>
+{% endblock %}

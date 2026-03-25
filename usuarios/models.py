@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
 
@@ -42,3 +43,40 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
 
     def get_full_name(self):
         return f'{self.first_name} {self.last_name}'.strip()
+
+
+class Guardian(BaseModel):
+    RELATIONSHIP_CHOICES = [
+        ('father', 'Father'),
+        ('mother', 'Mother'),
+        ('guardian', 'Guardian'),
+        ('other', 'Other'),
+    ]
+
+    parent = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='guardianships',
+        limit_choices_to={'groups__name': 'Parents'},
+        help_text='Parent or guardian user',
+    )
+    student = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='guardians',
+        limit_choices_to={'groups__name': 'Students'},
+        help_text='Student user',
+    )
+    relationship_type = models.CharField(
+        max_length=20,
+        choices=RELATIONSHIP_CHOICES,
+        default='guardian',
+    )
+
+    class Meta:
+        unique_together = ('parent', 'student')
+        verbose_name = 'guardian'
+        verbose_name_plural = 'guardians'
+
+    def __str__(self):
+        return f'{self.parent.email} \u2192 {self.student.email} ({self.get_relationship_type_display()})'

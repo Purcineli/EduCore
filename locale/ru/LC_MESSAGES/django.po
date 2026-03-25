@@ -1,0 +1,83 @@
+# Russian translations for EduCore.
+# Copyright (C) 2026 EduCore
+msgid ""
+msgstr ""
+"Project-Id-Version: EduCore 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-25 00:00+0000\n"
+"PO-Revision-Date: 2026-03-25 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Russian\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+# --- Notice Board ---
+msgid "Notice Board"
+msgstr "Доска объявлений"
+
+msgid "No notices at this time."
+msgstr "Объявлений пока нет."
+
+msgid "All Users"
+msgstr "Все пользователи"
+
+msgid "by"
+msgstr "от"
+
+# --- Pagination ---
+msgid "First"
+msgstr "Первая"
+
+msgid "Prev"
+msgstr "Назад"
+
+msgid "Next"
+msgstr "Вперёд"
+
+msgid "Last"
+msgstr "Последняя"
+
+# --- Inbox ---
+msgid "Messages"
+msgstr "Сообщения"
+
+msgid "Send Message"
+msgstr "Написать сообщение"
+
+msgid "New"
+msgstr "Новое"
+
+msgid "No messages yet."
+msgstr "Сообщений пока нет."
+
+msgid "Send your first message"
+msgstr "Отправить первое сообщение"
+
+# --- Message Detail ---
+msgid "From"
+msgstr "От"
+
+msgid "Reply"
+msgstr "Ответить"
+
+msgid "Back to Inbox"
+msgstr "Назад в папку входящих"
+
+# --- Message Form ---
+msgid "To"
+msgstr "Кому"
+
+msgid "Subject"
+msgstr "Тема"
+
+msgid "Message"
+msgstr "Сообщение"
+
+msgid "Send"
+msgstr "Отправить"
+
+msgid "Cancel"
+msgstr "Отмена"

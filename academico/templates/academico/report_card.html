@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% load i18n academic_filters %}
+
+{% block title %}Boletim - EduCore{% endblock %}
+
+{% block content %}
+<div style="background: rgb(248,250,252); min-height: 100vh; padding: 3rem 1rem;">
+  <div style="max-width: 1024px; margin: 0 auto;">
+
+    <h1 style="font-size: 1.875rem; font-weight: 700; color: rgb(15,23,42); margin-bottom: 0.5rem;">
+      Boletim Escolar
+    </h1>
+
+    {% if error %}
+      <div style="background: rgb(254,242,242); border: 1px solid rgb(254,202,202); border-radius: 0.5rem; padding: 1rem; color: rgb(220,38,38); margin-bottom: 2rem;">
+        {{ error }}
+      </div>
+    {% else %}
+
+      <p style="color: rgb(100,116,139); margin-bottom: 2rem;">
+        {{ student.get_full_name|default:student.email }} &bull; Ano letivo {{ active_year.year }}
+      </p>
+
+      <!-- Frequencia e total de aulas -->
+      <div style="background: white; border-radius: 0.5rem; box-shadow: 0 1px 2px rgba(0,0,0,0.05); border: 1px solid rgb(226,232,240); padding: 1.5rem; margin-bottom: 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+        <div>
+          <p style="color: rgb(100,116,139); font-size: 0.75rem; text-transform: uppercase; font-weight: 600; letter-spacing: 0.05em; margin-bottom: 0.5rem;">
+            Frequencia
+          </p>
+          <p style="font-size: 2.25rem; font-weight: 700;
+            {% if attendance_percentage >= 80 %}color: rgb(34,197,94);
+            {% elif attendance_percentage >= 70 %}color: rgb(202,138,4);
+            {% else %}color: rgb(239,68,68);{% endif %}">
+            {{ attendance_percentage }}%
+          </p>
+          {% if attendance_percentage < 75 %}
+            <p style="font-size: 0.75rem; color: rgb(239,68,68); margin-top: 0.25rem;">Abaixo do minimo (75%)</p>
+          {% endif %}
+        </div>
+        <div>
+          <p style="color: rgb(100,116,139); font-size: 0.75rem; text-transform: uppercase; font-weight: 600; letter-spacing: 0.05em; margin-bottom: 0.5rem;">
+            Total de Aulas
+          </p>
+          <p style="font-size: 2.25rem; font-weight: 700; color: rgb(99,102,241);">
+            {{ total_lessons }}
+          </p>
+        </div>
+      </div>
+
+      {% if report_data %}
+        <!-- Tabela de notas -->
+        <div style="background: white; border-radius: 0.5rem; box-shadow: 0 1px 2px rgba(0,0,0,0.05); border: 1px solid rgb(226,232,240); overflow: hidden; margin-bottom: 2rem;">
+          <table style="width: 100%; border-collapse: collapse;">
+            <thead style="background: rgb(248,250,252); border-bottom: 1px solid rgb(226,232,240);">
+              <tr>
+                <th style="padding: 0.875rem 1rem; text-align: left; font-weight: 600; color: rgb(15,23,42); font-size: 0.875rem;">Disciplina</th>
+                <th style="padding: 0.875rem 1rem; text-align: center; font-weight: 600; color: rgb(15,23,42); font-size: 0.875rem;">1&ordm; Bimestre</th>
+                <th style="padding: 0.875rem 1rem; text-align: center; font-weight: 600; color: rgb(15,23,42); font-size: 0.875rem;">2&ordm; Bimestre</th>
+                <th style="padding: 0.875rem 1rem; text-align: center; font-weight: 600; color: rgb(15,23,42); font-size: 0.875rem;">3&ordm; Bimestre</th>
+                <th style="padding: 0.875rem 1rem; text-align: center; font-weight: 600; color: rgb(15,23,42); font-size: 0.875rem;">4&ordm; Bimestre</th>
+                <th style="padding: 0.875rem 1rem; text-align: center; font-weight: 600; color: rgb(15,23,42); font-size: 0.875rem;">Media</th>
+                <th style="padding: 0.875rem 1rem; text-align: center; font-weight: 600; color: rgb(15,23,42); font-size: 0.875rem;">Situacao</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for subject_name, terms_data in report_data.items %}
+                {% with summary=subject_summary|get_item:subject_name %}
+                <tr style="border-bottom: 1px solid rgb(226,232,240);">
+                  <td style="padding: 0.875rem 1rem; color: rgb(15,23,42); font-weight: 500;">{{ subject_name }}</td>
+
+                  {% for term_num in '1,2,3,4'|split:',' %}
+                    {% with term_int=term_num|add:0 term_grades=terms_data|get_item:term_num %}
+                    <td style="padding: 0.875rem 1rem; text-align: center;">
+                      {% if term_grades %}
+                        {% for g in term_grades %}
+                          <span style="display: inline-block; font-size: 0.875rem; font-weight: 600;
+                            {% if g.value >= 7 %}color: rgb(34,197,94);
+                            {% elif g.value >= 5 %}color: rgb(202,138,4);
+                            {% else %}color: rgb(239,68,68);{% endif %}">
+                            {{ g.value }}
+                          </span>
+                          {% if not forloop.last %}<br>{% endif %}
+                        {% endfor %}
+                      {% else %}
+                        <span style="color: rgb(148,163,184);">—</span>
+                      {% endif %}
+                    </td>
+                    {% endwith %}
+                  {% endfor %}
+
+                  <td style="padding: 0.875rem 1rem; text-align: center; font-weight: 700; font-size: 1rem;
+                    {% if summary.average >= 7 %}color: rgb(34,197,94);
+                    {% elif summary.average >= 5 %}color: rgb(202,138,4);
+                    {% else %}color: rgb(239,68,68);{% endif %}">
+                    {{ summary.average }}
+                  </td>
+                  <td style="padding: 0.875rem 1rem; text-align: center;">
+                    <span style="display: inline-block; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600;
+                      {% if summary.status == 'Aprovado' %}background: rgb(220,252,231); color: rgb(21,128,61);
+                      {% elif summary.status == 'Recuperacao' %}background: rgb(254,249,195); color: rgb(133,77,14);
+                      {% else %}background: rgb(254,226,226); color: rgb(185,28,28);{% endif %}">
+                      {{ summary.status }}
+                    </span>
+                  </td>
+                </tr>
+                {% endwith %}
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <div style="background: white; border-radius: 0.5rem; padding: 3rem; text-align: center; color: rgb(100,116,139); border: 1px solid rgb(226,232,240);">
+          <p>Nenhuma nota registrada para este ano letivo.</p>
+        </div>
+      {% endif %}
+
+      <!-- Botao de impressao -->
+      <div style="text-align: center; margin-top: 1.5rem;">
+        <button onclick="window.print()"
+          style="padding: 0.75rem 2rem; background: linear-gradient(to right, rgb(37,99,235), rgb(99,102,241)); color: white; border: none; border-radius: 0.375rem; font-weight: 500; cursor: pointer; font-size: 0.875rem;">
+          Imprimir Boletim
+        </button>
+      </div>
+
+    {% endif %}
+
+  </div>
+</div>
+{% endblock %}
